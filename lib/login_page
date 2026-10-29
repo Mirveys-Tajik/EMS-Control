@@ -1,1 +1,331 @@
 
+import 'package:flutter/material.dart';
+import 'home_page.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  // Controllers read what the user types.
+  final TextEditingController usernameController =
+  TextEditingController();
+
+  final TextEditingController passwordController =
+  TextEditingController();
+
+  // Basic demonstration login.
+  final String correctUsername = 'admin';
+  final String correctPassword = 'ems123';
+
+  String errorMessage = '';
+
+  bool hidePassword = true;
+
+  static const Color csunRed = Color(0xFFD22030);
+
+  // ---------------------------------------------------------
+  // LOGIN
+  // ---------------------------------------------------------
+
+  void login() {
+
+    final String username =
+    usernameController.text.trim();
+
+    final String password =
+        passwordController.text;
+
+    if (username == correctUsername &&
+        password == correctPassword) {
+
+      // Go to the EMS Home Page.
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+
+    } else {
+
+      setState(() {
+        errorMessage =
+        'Incorrect username or password';
+      });
+    }
+  }
+
+  // ---------------------------------------------------------
+  // CLEAN UP
+  // ---------------------------------------------------------
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
+  // ---------------------------------------------------------
+  // USER INTERFACE
+  // ---------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+
+      backgroundColor: Colors.grey[100],
+
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: csunRed,
+        toolbarHeight: 100,
+        elevation: 0,
+
+        title: const Center(
+          child: Text(
+            'EMS Control',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+
+      body: Center(
+
+        child: SingleChildScrollView(
+
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+
+            child: ConstrainedBox(
+              constraints:
+              const BoxConstraints(
+                maxWidth: 450,
+              ),
+
+              child: Card(
+                elevation: 4,
+
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.circular(16),
+                ),
+
+                child: Padding(
+                  padding:
+                  const EdgeInsets.all(30),
+
+                  child: Column(
+                    mainAxisSize:
+                    MainAxisSize.min,
+
+                    children: [
+
+                      const Icon(
+                        Icons.lock_outline,
+                        size: 70,
+                        color: csunRed,
+                      ),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      const Text(
+                        'EMS Login',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight:
+                          FontWeight.bold,
+                          color: csunRed,
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      const Text(
+                        'Enter your credentials to continue',
+                        textAlign:
+                        TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 30,
+                      ),
+
+                      // -----------------------------
+                      // USERNAME
+                      // -----------------------------
+
+                      TextField(
+                        controller:
+                        usernameController,
+
+                        decoration:
+                        const InputDecoration(
+                          labelText:
+                          'Username',
+
+                          prefixIcon:
+                          Icon(
+                            Icons.person,
+                          ),
+
+                          border:
+                          OutlineInputBorder(),
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      // -----------------------------
+                      // PASSWORD
+                      // -----------------------------
+
+                      TextField(
+                        controller:
+                        passwordController,
+
+                        obscureText:
+                        hidePassword,
+
+                        onSubmitted: (_) {
+                          login();
+                        },
+
+                        decoration:
+                        InputDecoration(
+                          labelText:
+                          'Password',
+
+                          prefixIcon:
+                          const Icon(
+                            Icons.lock,
+                          ),
+
+                          border:
+                          const OutlineInputBorder(),
+
+                          suffixIcon:
+                          IconButton(
+
+                            icon: Icon(
+                              hidePassword
+                                  ? Icons
+                                  .visibility
+                                  : Icons
+                                  .visibility_off,
+                            ),
+
+                            onPressed: () {
+
+                              setState(() {
+                                hidePassword =
+                                !hidePassword;
+                              });
+
+                            },
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 15,
+                      ),
+
+                      // -----------------------------
+                      // ERROR MESSAGE
+                      // -----------------------------
+
+                      if (errorMessage.isNotEmpty)
+
+                        Text(
+                          errorMessage,
+
+                          style:
+                          const TextStyle(
+                            color: Colors.red,
+                            fontWeight:
+                            FontWeight.bold,
+                          ),
+                        ),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      // -----------------------------
+                      // LOGIN BUTTON
+                      // -----------------------------
+
+                      SizedBox(
+                        width:
+                        double.infinity,
+                        height: 50,
+
+                        child:
+                        ElevatedButton(
+
+                          onPressed:
+                          login,
+
+                          style:
+                          ElevatedButton
+                              .styleFrom(
+
+                            backgroundColor:
+                            csunRed,
+
+                            foregroundColor:
+                            Colors.white,
+
+                            shape:
+                            RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(
+                                  8),
+                            ),
+                          ),
+
+                          child:
+                          const Text(
+                            'LOGIN',
+                            style:
+                            TextStyle(
+                              fontSize: 18,
+                              fontWeight:
+                              FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
