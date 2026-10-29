@@ -1,1 +1,154 @@
 
+import 'package:flutter/material.dart';
+
+// ======================================================
+// EMS CONTROL - ABOUT US PAGE
+// CSUN 2026 EMS Senior Design Project
+// ======================================================
+//
+// This page provides general information about the
+// EMS Control application.
+//
+// No MQTT or Raspberry Pi connection is required.
+//
+// ======================================================
+
+class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
+  // Colors matching the EMS Control interface.
+  static const Color headerColor = Color(0xFF30464E);
+  static const Color pageColor = Color(0xFFFAF5FB);
+  static const Color cardColor = Color(0xFFF3EDF5);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: pageColor,
+
+      // ==================================================
+      // HEADER
+      // ==================================================
+
+      appBar: AppBar(
+        backgroundColor: headerColor,
+        foregroundColor: Colors.white,
+        title: const Text(
+          'About Us',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
+      // ==================================================
+      // PAGE CONTENT
+      // ==================================================
+
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+
+          child: Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: Card(
+                    color: cardColor,
+                    elevation: 2,
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(16),
+                    ),
+
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.bolt,
+                            size: 55,
+                            color: headerColor,
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          const Text(
+                            'EMS Control',
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: headerColor,
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          const Text(
+                            'This application was developed '
+                            'for the 2026 Energy Management '
+                            'System (EMS) project at '
+                            'California State University, '
+                            'Northridge (CSUN).',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              height: 1.5,
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          const Text(
+                            '2026 Senior Design Project',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // ==========================================
+              // BACK TO HOME BUTTON
+              // ==========================================
+              //
+              // Returns to the previous HomePage.
+              // Does not create another HomePage instance.
+              //
+              // ==========================================
+
+              SizedBox(
+                width: double.infinity,
+
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+
+                  icon: const Icon(Icons.home),
+
+                  label: const Text('Back to Home'),
+
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: headerColor,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.all(16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
